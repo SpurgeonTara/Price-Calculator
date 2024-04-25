@@ -1,0 +1,90 @@
+swagger: '2.0'
+components:
+  schemas:
+    Items:
+      type: object
+      required:
+        - type
+        - description
+      properties:
+        id:
+          type: number
+          description: The auto-generated id of the organisation
+        type:
+          type: string
+          description: The type of the item should be either perishable or non-perishable
+        description:
+          type: string
+          description: The description of the item
+tags:
+  - name: Items
+    description: Managing Items
+paths:
+  '/api/v1/item':
+    get:
+      summary: Lists all Items
+      tags: [Items]
+      responses:
+        '200':
+          description: The list of the Items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Items'
+
+    post:
+      summary: Create a new Item
+      tags: [Items]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Items'
+      responses:
+        '201':
+          description: The item was created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Items'
+    '500':
+      description: Some server error
+
+  '/api/v1/item/{id}':
+    get:
+      summary: Get the Item by id
+      tags: [Items]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The Items id
+      responses:
+        '200':
+          description: The Items response by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Items'
+        '404':
+          description: The Item was not found
+    delete:
+      summary: Remove the Item by id
+      tags: [Items]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The Items id
+      responses:
+        '200':
+          description: The Item was deleted
+        '404':
+          description: The Item was not found

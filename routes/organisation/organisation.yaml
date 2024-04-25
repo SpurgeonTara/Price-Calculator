@@ -1,0 +1,86 @@
+swagger: '2.0'
+components:
+  schemas:
+    Organisations:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: number
+          description: The auto-generated id of the organisation
+        name:
+          type: string
+          description: The name of the organisation
+tags:
+  - name: Organisations
+    description: Managing Organisations
+paths:
+  '/api/v1/organisation':
+    get:
+      summary: Lists all Organisations
+      tags: [Organisations]
+      responses:
+        '200':
+          description: The list of the organisations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisations'
+
+    post:
+      summary: Create a new Organisation
+      tags: [Organisations]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organisations'
+      responses:
+        '201':
+          description: The organisation created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Organisations'
+    '500':
+      description: Some server error
+
+  '/api/v1/organisation/{id}':
+    get:
+      summary: Get the Organisation by id
+      tags: [Organisations]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The Organisation id
+      responses:
+        '200':
+          description: The Organisation response by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organisation'
+        '404':
+          description: The organisation was not found
+    delete:
+      summary: Remove the organisation by id
+      tags: [Organisations]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The organisation id
+      responses:
+        '200':
+          description: The organisation was deleted
+        '404':
+          description: The organisation was not found

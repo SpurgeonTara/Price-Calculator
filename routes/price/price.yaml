@@ -1,0 +1,146 @@
+swagger: '2.0'
+components:
+  schemas:
+    Prices:
+      type: object
+      required:
+        - organization_id
+        - item_id
+        - zone
+        - base_distance_in_km
+        - km_price
+        - fix_price
+      properties:
+        id:
+          type: number
+          description: The auto-generated id of the organisation
+        organization_id:
+          type: number
+          description: The id of the organisation
+        item_id:
+          type: number
+          description: The id of the item
+        zone:
+          type: string
+          description: The zone of the organisation
+        base_distance_in_km:
+          type: number
+          description: The base distance
+        km_price:
+          type: string
+          description: The km price per over base_distance_in_km in "perishable/non-perishable" - "1.5/1" format
+        fix_price:
+          type: number
+          description: The fix price per distance lesser base_distance_in_km
+    CalculatePrice:
+      type: object
+      required:
+        - organization_id
+        - zone
+        - total_distance
+        - item_type
+      properties:
+        organization_id:
+          type: number
+          description: The id of the organisation
+        zone:
+          type: string
+          description: The zone of the organisation
+        total_distance:
+          type: number
+          description: The total distance
+        item_type:
+          type: string
+          description: Type of the item
+tags:
+  - name: Prices
+    description: Managing Prices
+paths:
+  '/api/v1/price':
+    get:
+      summary: Lists all Prices
+      tags: [Prices]
+      responses:
+        '200':
+          description: The list of the Prices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prices'
+
+    post:
+      summary: Create a new Price
+      tags: [Prices]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prices'
+      responses:
+        '201':
+          description: The Price was created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Prices'
+    '500':
+      description: Some server error
+
+  '/api/v1/price/calculate':
+    post:
+      summary: Calculate price
+      tags: [Prices]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculatePrice'
+      responses:
+        '200':
+          description: The Total Price was fetched successfully.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Prices'
+    '500':
+      description: Some server error
+
+  '/api/v1/price/{id}':
+    get:
+      summary: Get the Price by id
+      tags: [Prices]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The Price id
+      responses:
+        '200':
+          description: The Price response by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Prices'
+        '404':
+          description: The Price was not found
+    delete:
+      summary: Remove the Price by id
+      tags: [Prices]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The Price id
+      responses:
+        '200':
+          description: The Price was deleted
+        '404':
+          description: The Price was not found
