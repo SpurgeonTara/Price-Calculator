@@ -104,8 +104,8 @@ Used PostgreSQL. Designed the schema with validations for API input payloads.
 ## Deliverables
 - **Deploy Application:**
   - Deployeded the application on render.com with a proper swagger page.
-  - you can find it here: [https://price-calculator-private.onrender.com/api-docs/](https://price-calculator-private.onrender.com/api-docs/)
-  - Swagger docs here: [https://price-calculator-private.onrender.com/api-docs/api-docs](https://price-calculator-private.onrender.com/api-docs/api-docs)
+  - you can find it here: [https://price-calculator-private.onrender.com/](https://price-calculator-private.onrender.com/)
+  - Swagger docs here: [https://price-calculator-private.onrender.com/api-docs](https://price-calculator-private.onrender.com/api-docs/)
   
 - **API Documentation:**
   - Detailing endpoints, request/response formats, and error handling of the api was done using Swagger.
