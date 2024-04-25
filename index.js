@@ -64,15 +64,19 @@ const CORS = (req, res, next) => {
 
 app.use(CORS);
 
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to Price Calculator' });
+});
+
 app.use('/api/v1', apiRoutes);
 
-// app.use((req, res, next) => {
-//   const error = new Error('Could not find this route.');
-//   if (!error.statusCode) {
-//     error.statusCode = 404;
-//   }
-//   next(error);
-// });
+app.use((req, res, next) => {
+  const error = new Error('Could not find this route.');
+  if (!error.statusCode) {
+    error.statusCode = 404;
+  }
+  next(error);
+});
 
 app.use((err, req, res, next) => {
   if (res.headerSent) {
